@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>User Information</title>
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+            <a class="navbar-brand" href="#">Test App</a>
+            <a class="navbar-brand" href="/dashboard">Dashboard</a>
+            <a class="navbar-brand" href="/users/edit/normal/{{request.session.logged_id}}">Profile</a>
+            <a class="navbar-brand" href="/logout">Log off</a>
+                </a>
+            </div>
+        </div>
+    </nav>
+    <h1>{{loggeduser.fname}} {{loggeduser.lname}}</h1>
+    <h4>Registered at: {{loggeduser.created_at}}</h4>
+    <h4>Email address: {{loggeduser.email}}</h4>
+    <h4>Description: {{loggeduser.desc}}</h4>
+    <h2>Leave a message for {{loggeduser.fname}}</h2>
+    <form action='/users/wall/{{loggeduser.id}}' method='post'>
+         {% csrf_token %}
+         {% if messages %} 
+         {% for x in messages %}
+        <p>{{x}}</p>
+        {% endfor %} 
+        {% endif %}
+        <input type='text' name='message'>
+        <input type="hidden" name="receiver_id" value="{{loggeduser.id}}">
+        <input type="hidden" name="this_user_id" value="{{request.session.logged_id}}">
+        <button>Post Message</button>
+    </form>
+
+     {% for i in usersmessages %}
+    <hr>
+     <h1>{{i.messenger.fname}} {{i.messenger.lname}} wrote:</h1>
+     <h5>{{i.created_at}}</h5>
+     <h3>{{i.content}}</h3>
+      {% for j in allcomments %}
+        {% if j.message_id == i.id %}
+      <p>{{j.commenter.fname}} wrote: {{j.content}}</p>
+     {% endif %}
+     {% endfor %}
+    
+       
+<form action='/users/comment/{{loggeduser.id}}' method='post'>
+    {% csrf_token %} 
+        <input type='hidden' name='this_message_id' value="{{i.id}}">
+        <input type='hidden' name='this_user_id' value="{{request.session.logged_id}}">
+        <input type='text' name='comment'>
+        <button>Add Comment</button>
+    </form> {% endfor %}
+     <hr>
+
+    
+
+
+
+</body>
+
+</html>

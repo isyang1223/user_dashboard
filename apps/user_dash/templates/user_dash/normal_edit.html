@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Edit Page</title>
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class=“container”>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+            <a class="navbar-brand" href="#">Test App</a>
+            <a class="navbar-brand" href="/dashboard">Dashboard</a>
+            <a class="navbar-brand" href="/users/edit/normal/{{request.session.logged_id}}">Profile</a>
+            <a class="navbar-brand" href="/logout">Log off</a>
+
+                </div>
+            </div>
+        </nav>
+        <h1>Edit Profile {{loggeduser.id}}</h1>
+        {% if messages %} {% for x in messages %}
+
+        <p>{{x}}</p>
+        {% endfor %} {% endif %}
+        <div style="border: 2px solid black; width: 200px;">
+            <form action='/users/edit/{{loggeduser.id}}/normalname' method='post'>
+                {% csrf_token %}
+                <input type="hidden" name="admin" value="admin">
+                <p></p>
+                <h4>Email Address:</h4>
+                <input type='email' name='email' placeholder="{{loggeduser.email}}">
+
+                <h4>First Name:</h4>
+                <input type='text' name='fname' placeholder="{{loggeduser.fname}}">
+
+                <h4>Last Name:</h4>
+                <input type='text' name='lname' placeholder="{{loggeduser.lname}}">
+                <input type="hidden" name="this_user_id" value="{{loggeduser.id}}">
+                <input type='submit' value='save'>
+            </form>
+        </div>
+        <hr>
+        <div style="border: 2px solid black; width: 200px;">
+            <form action='/users/edit/{{loggeduser.id}}/normalpassword' method='post'>
+                {% csrf_token %}
+                <h4>Password:</h4>
+                <input type="password" name="password">
+                <h4>Password Confirmation:</h4>
+                <input type="password" name="password2">
+                <br>
+                <br>
+                <input type="hidden" name="this_user_id" value="{{loggeduser.id}}">
+                <input type='submit' value='Update Password'>
+            </form>
+        </div>
+        <hr>
+        <div style="border: 2px solid black; width: 200px;">
+        <form action='/users/edit/{{loggeduser.id}}/normaldescription' method='post'>
+             {% csrf_token %}
+            <h4>Edit Description:</h4>
+            <input type="textarea" name="desc">
+            <br>
+            <br>
+            <input type="hidden" name="this_user_id" value="{{loggeduser.id}}">
+            <input type='submit' value='Save'>
+        </form>
+        </div>
+
+    </div>
+</body>
+
+</html>
