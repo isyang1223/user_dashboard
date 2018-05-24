@@ -51,13 +51,17 @@ def create(request):
 def edit(request, id):
     if not "logged_id" in request.session:
         return redirect("/")
+
     key= User.objects.get(id=id)
     data={
             "this_user": key
     }
     
-    
-    return render (request, "user_dash/users_edit.html", data)
+    if request.session["user_level"] == "normal":
+        return render (request, "user_dash/normal_edit.html", data)
+    else:
+        return render (request, "user_dash/admins_edit.html", data)
+
 
 def normal_edit(request, id):
     if not "logged_id" in request.session:
@@ -97,8 +101,10 @@ def edit_normalpassword(request, id):
             return redirect("/dashboard")
 
     
-def edit_name(request, id):
+def edit_info(request, id):
+    
     if request.method == 'POST':
+        print "this is ++++++++++++++++++++"
         errors = User.objects.edit_validator(request.POST)
         if errors:
             for tag, error in errors.iteritems():
@@ -109,6 +115,20 @@ def edit_name(request, id):
             return redirect("/dashboard")
 
     return redirect("/dashboard")
+
+
+
+def edit_admin(request, id):
+    if request.method == 'POST':
+        print "sup vinny"
+        errors = User.objects.edit_validator(request.POST)
+        if errors:
+            for tag, error in errors.iteritems():
+                messages.error(request, error, extra_tags=tag)
+        
+
+    return redirect("/dashboard/admin")
+   
 
 def edit_password(request, id):
     if request.method == 'POST':
@@ -233,3 +253,6 @@ def admin_dashboard(request):
 def logout(request):
     request.session.clear()
     return redirect("/")
+
+
+    

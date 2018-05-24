@@ -1,0 +1,43 @@
+.heading {
+    color: red;
+
+}
+body { padding-top: 70px; 
+}
+.bottom{
+    padding-top: 100px;
+    
+}
+
+.addnew{
+    margin-top: 20px;
+}
+
+.postbutton{
+    float: right;
+    
+}
+
+.m-content{
+    text-indent: 50px;
+    border-style: solid;
+}
+.c-content{
+    text-indent: 50px;
+    margin-left: 50px;
+    border-style: solid;
+}
+
+h5 {
+    text-align: right;
+}
+
+.returnbutton{
+    margin-top: 30px;
+}
+
+.border{
+    padding: 20px;
+    border: 2px solid black;
+    width: 300px;
+}

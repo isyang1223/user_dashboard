@@ -7,6 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>User Information</title>
 
+     {% load static %}
+    <!-- The line above tells Django to be ready to listen for static files -->
+    <link rel="stylesheet" href="{% static 'user_dash/css/main.css' %}" media="screen" title="no title" charset="utf-8">
+
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
         crossorigin="anonymous">
@@ -15,19 +19,42 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
-            <a class="navbar-brand" href="#">Test App</a>
-            <a class="navbar-brand" href="/dashboard">Dashboard</a>
-            <a class="navbar-brand" href="/users/edit/normal/{{request.session.logged_id}}">Profile</a>
-            <a class="navbar-brand" href="/logout">Log off</a>
-                </a>
+    
+                <a class="navbar-brand" href="#">YourSpace</a>
             </div>
+    
+    
+            <ul class="nav navbar-nav">
+    
+                <li>
+                    <a href="/dashboard">Dashboard</a>
+                </li>
+                <li>
+                    <a href="/users/edit/normal/{{request.session.logged_id}}">Profile</a>
+                </li>
+    
+            </ul>
+    
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/logout">Log off</a>
+                </li>
+            </ul>
+    
         </div>
     </nav>
+
+
+
+    <div class="container">
+
+
     <h1>{{loggeduser.fname}} {{loggeduser.lname}}</h1>
     <h4>Registered at: {{loggeduser.created_at}}</h4>
+    <h4>User ID: #{{loggeduser.id}}</h4>
     <h4>Email address: {{loggeduser.email}}</h4>
     <h4>Description: {{loggeduser.desc}}</h4>
     <h2>Leave a message for {{loggeduser.fname}}</h2>
@@ -38,32 +65,40 @@
         <p>{{x}}</p>
         {% endfor %} 
         {% endif %}
-        <input type='text' name='message'>
+        <textarea class="form-control" placeholder="Enter message" rows="4" name="message"></textarea>
         <input type="hidden" name="receiver_id" value="{{loggeduser.id}}">
         <input type="hidden" name="this_user_id" value="{{request.session.logged_id}}">
-        <button>Post Message</button>
+        <button class="postbutton">Post Message</button>
     </form>
+
+
+    
 
      {% for i in usersmessages %}
     <hr>
      <h1>{{i.messenger.fname}} {{i.messenger.lname}} wrote:</h1>
      <h5>{{i.created_at}}</h5>
-     <h3>{{i.content}}</h3>
+     <h3 class="m-content">{{i.content}}</h3>
       {% for j in allcomments %}
         {% if j.message_id == i.id %}
-      <p>{{j.commenter.fname}} wrote: {{j.content}}</p>
+      <p><a href="/users/show/{{i.messenger.id}}">{{j.commenter.fname}}</a> wrote:</p>
+      <p class="c-content">{{j.content}}</p>
      {% endif %}
      {% endfor %}
     
        
-<form action='/users/comment/{{loggeduser.id}}' method='post'>
+    <form action='/users/comment/{{loggeduser.id}}' method='post'>
     {% csrf_token %} 
         <input type='hidden' name='this_message_id' value="{{i.id}}">
         <input type='hidden' name='this_user_id' value="{{request.session.logged_id}}">
-        <input type='text' name='comment'>
-        <button>Add Comment</button>
+       
+        <textarea class="form-control" placeholder="Enter comment" rows="2" name="comment"></textarea>
+        <button class="postbutton">Add Comment</button>
     </form> {% endfor %}
      <hr>
+
+
+    </div>
 
     
 

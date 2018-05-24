@@ -9,7 +9,6 @@
     <!-- The line above tells Django to be ready to listen for static files -->
     <link rel="stylesheet" href="{% static 'user_dash/css/main.css' %}" media="screen" title="no title" charset="utf-8">
 
-
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
         crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
@@ -31,7 +30,7 @@
                     <a href="/dashboard">Dashboard</a>
                 </li>
                 <li>
-                    <a href="/users/edit/normal/{{request.session.logged_id}}">Profile</a>
+                    <a href="/users/edit/{{request.session.logged_id}}">Profile</a>
                 </li>
     
             </ul>
@@ -47,33 +46,64 @@
 
 
 
+
     <div class="container">
-        
-        <h1>Edit Profile {{loggeduser.id}}</h1>
+      
+
+        <div class="row">
+            <h1 class="col-md-6">Edit User: {{this_user.fname}}</h1>
+
+            <button class="col-md-3 col-md-offset-3 returnbutton">
+                <a href="/dashboard">Return to Dashboard</a>
+            </button>
+
+        </div>
+
+
+
+
+
+
         {% if messages %} {% for x in messages %}
 
         <p>{{x}}</p>
         {% endfor %} {% endif %}
         <div class="border">
-            <form action='/users/edit/{{loggeduser.id}}/normalname' method='post'>
+            <form action='/users/edit/admin/{{this_user.id}}' method='post'>
                 {% csrf_token %}
-                <input type="hidden" name="user_level" value="{{loggeduser.user_level}}">
+                <input type="hidden" name="user_level" value="admin">
                 <p></p>
                 <h4>Email Address:</h4>
-                <input type='email' name='email' placeholder="{{loggeduser.email}}">
+                <input type='email' name='email' placeholder="{{this_user.email}}">
 
                 <h4>First Name:</h4>
-                <input type='text' name='fname' placeholder="{{loggeduser.fname}}">
+                <input type='text' name='fname' placeholder="{{this_user.fname}}">
 
                 <h4>Last Name:</h4>
-                <input type='text' name='lname' placeholder="{{loggeduser.lname}}">
-                <input type="hidden" name="this_user_id" value="{{loggeduser.id}}">
+                <input type='text' name='lname' placeholder="{{this_user.lname}}">
+              
+
+                <h4>User Level:</h4>
+                <select name="ulvl">
+
+                    <option value="normal">Normal</option>
+                    <option value="admin">Admin</option>
+                </select>
+
+
+                <input type="hidden" name="this_user_id" value="{{this_user.id}}">
                 <input type='submit' value='save'>
+
             </form>
         </div>
+
+
+
+
+
         <hr>
         <div class="border">
-            <form action='/users/edit/{{loggeduser.id}}/normalpassword' method='post'>
+            <form action='/users/edit/{{this_user.id}}/password' method='post'>
                 {% csrf_token %}
                 <h4>Password:</h4>
                 <input type="password" name="password">
@@ -81,22 +111,22 @@
                 <input type="password" name="password2">
                 <br>
                 <br>
-                <input type="hidden" name="this_user_id" value="{{loggeduser.id}}">
+                <input type="hidden" name="this_user_id" value="{{this_user.id}}">
                 <input type='submit' value='Update Password'>
             </form>
         </div>
-        <hr>
-        <div class="border">
-        <form action='/users/edit/{{loggeduser.id}}/normaldescription' method='post'>
+        <!-- <hr>
+        <div style="border: 2px solid black; width: 200px;">
+        <form action='/users/edit/description' method='post'>
              {% csrf_token %}
             <h4>Edit Description:</h4>
-            <textarea class="form-control" placeholder="Enter Description" rows="3" name="desc"></textarea>
+            <input type="textarea" name="description">
             <br>
             <br>
-            <input type="hidden" name="this_user_id" value="{{loggeduser.id}}">
+        
             <input type='submit' value='Save'>
         </form>
-        </div>
+        </div> -->
 
     </div>
 </body>

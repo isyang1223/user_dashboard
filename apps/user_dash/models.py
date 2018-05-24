@@ -40,6 +40,7 @@ class UserManager(models.Manager):
         if checklogin:
             if bcrypt.checkpw(postData['password'].encode(), checklogin[0].password.encode()) == True:
                 errors["user"]=checklogin[0]
+
             else:
                 errors["errorsuser"]="Login failed"
         else:
@@ -58,11 +59,17 @@ class UserManager(models.Manager):
             errors["lname"] = "User's last name cannot contain any numbers or special characters!"
         if not EMAIL_REGEX.match(postData['email']):
             errors["email"] = "Invalid Email/Password!"
-        if len(User.objects.filter(email=postData["email"])) > 0:
-            errors["email"] = "Email already exist"
+       
         if len(errors) == 0:
             this_user = User.objects.filter(id= postData["this_user_id"])
-            this_user.update(fname=postData['fname'], lname=postData['lname'], email=postData['email'])
+            print postData
+            if postData["user_level"] == "admin":
+
+                this_user.update(fname=postData['fname'], lname=postData['lname'], email=postData['email'], user_level = postData['ulvl'])
+            else:
+
+                this_user.update(fname=postData['fname'], lname=postData['lname'], email=postData['email'])
+            
             
         return errors
 
