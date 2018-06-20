@@ -29,7 +29,7 @@
         <h1>Edit User #{{this_user.id}}</h1>
         {% if messages %} {% for x in messages %}
 
-        <p>{{x}}</p>
+        <p class="error">{{x}}</p>
         {% endfor %} {% endif %}
         <div style="border: 2px solid black; width: 200px;">
         <form action='/users/edit/{{this_user.id}}/info' method='post'>

@@ -1,8 +1,17 @@
 .heading {
     color: red;
+    padding-top:50px;
 
 }
-body { padding-top: 70px; 
+body { padding-top: 70px;
+     display: table;
+  width: 100%;
+  
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+  background-position: center top;
+  height: 350px;
+  
+   
 }
 .bottom{
     padding-top: 100px;
@@ -40,4 +49,26 @@ h5 {
     padding: 20px;
     border: 2px solid black;
     width: 300px;
+}
+
+.about {
+    color: rgb(236, 241, 154);
+
+}
+.about h4 {
+    font-size: 30px;
+}
+
+.about p {
+    font-size: 16px;
+}
+
+.bottom {
+    text-align: center;
+    padding-top: 200px;
+}
+
+.error {
+    color:red;
+
 }

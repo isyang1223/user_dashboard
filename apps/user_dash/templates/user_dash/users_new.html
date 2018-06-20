@@ -61,7 +61,7 @@
         </button>
         {% if messages %} {% for x in messages %}
 
-        <p>{{x}}</p>
+        <p class="error">{{x}}</p>
         {% endfor %} {% endif %}
         <form action='/create' method='post'>
             {% csrf_token %}

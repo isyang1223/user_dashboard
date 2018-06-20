@@ -52,7 +52,7 @@
         <h1>Edit Profile {{loggeduser.id}}</h1>
         {% if messages %} {% for x in messages %}
 
-        <p>{{x}}</p>
+        <p class="error">{{x}}</p>
         {% endfor %} {% endif %}
         <div class="border">
             <form action='/users/edit/{{loggeduser.id}}/normalname' method='post'>
@@ -68,7 +68,7 @@
                 <h4>Last Name:</h4>
                 <input type='text' name='lname' placeholder="{{loggeduser.lname}}">
                 <input type="hidden" name="this_user_id" value="{{loggeduser.id}}">
-                <input type='submit' value='save'>
+                <input class="btn btn-primary btn-sm" type='submit' value='save'>
             </form>
         </div>
         <hr>
@@ -82,7 +82,7 @@
                 <br>
                 <br>
                 <input type="hidden" name="this_user_id" value="{{loggeduser.id}}">
-                <input type='submit' value='Update Password'>
+                <input type='submit' class="btn btn-primary btn-sm" value='Update Password'>
             </form>
         </div>
         <hr>
@@ -94,7 +94,7 @@
             <br>
             <br>
             <input type="hidden" name="this_user_id" value="{{loggeduser.id}}">
-            <input type='submit' value='Save'>
+            <input class="btn btn-primary btn-sm" type='submit' value='Save'>
         </form>
         </div>
 

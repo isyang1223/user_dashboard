@@ -17,7 +17,7 @@
         crossorigin="anonymous"></script>
 </head>
 
-<body>
+<body style="background-image: url('{% static "user_dash/img/background.jpeg"%}')">
     
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
@@ -37,7 +37,10 @@
          
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a href="/signin">Sign in</a>
+                    <a href="/signin">Login</a>
+                </li>
+                <li>
+                    <a href="/register">Sign up</a>
                 </li>
             </ul>
         
@@ -51,23 +54,24 @@
 
     <div class="container">
         <h1 class="heading">Welcome to YourSpace</h1>
-        <button type="button"><a class="navbar-brand" href="/signin">Start</a></button>
+        <a class="btn btn-primary btn-lg" href="/signin" role="button">Start</a>
+        
 
-    </div>
+    
     <div class="row container bottom">
-        <div class="col-md-4 col-sm-6">
+        <div class="col-md-4 col-sm-4 about">
             <h4>Manage Users</h4>
             <p>Using this application, you'll learn how to add, remove, and edit users for the application.</p>
 
         </div>
 
-        <div class="col-md-4 col-sm-6">
+        <div class="col-md-4 col-sm-4 about">
             <h4>Leave messages</h4>
             <p>Users will be able to leave a message to another user using this application.</p>
         
         </div>
 
-        <div class="col-md-4 col-sm-6">
+        <div class="col-md-4 col-sm-4 about">
             <h4>Edit User Information</h4>
             <p>Admins will be able to edit another user's information (email address, first name, last name, etc).</p>
         
@@ -75,6 +79,7 @@
 
 
 
+    </div>
     </div>
 
     

@@ -17,23 +17,44 @@ def register(request):
 
     return render(request, "user_dash/register.html")
 
-def reg(request):
-    if request.method == 'POST':
-        errors = User.objects.registration_validator(request.POST)
-        if "user" in errors: 
-            request.session["user_level"] = errors["user"].user_level
-            request.session["user"] = errors["user"]
-            request.session["idk"] = "registered"
-            request.session["logged_id"] = errors["user"].id
-            request.session["logged_name"] = errors["user"].fname
 
-            return redirect('/dashboard')
+def reg(request):
+    if request.method == "POST":
+        errors = User.objects.registration_validator(request.POST)
+    if 'id' not in errors:
+        for tag, error in errors.iteritems():
+            messages.error(request,error, extra_tags = tag)
+        if 'reg' in request.POST:
+            return redirect('/users/new')
         else:
-            for tag, error in errors.iteritems():
-                messages.error(request, error, extra_tags=tag)
             return redirect('/register')
     else:
-        return redirect("/register")
+        if 'reg' in request.POST:
+            return redirect('/dashboard')
+        else:
+            request.session['logged_id'] = errors['id']
+            request.session['user_level'] = errors['user_level']
+            return redirect('/dashboard')
+    return redirect('/register')
+
+# def reg(request):
+#     if request.method == 'POST':
+#         errors = User.objects.registration_validator(request.POST)
+#         if "user" in errors: 
+        
+#             request.session["user_level"] = errors["user"].user_level
+#             request.session["user"] = errors["user"]
+#             request.session["idk"] = "registered"
+#             request.session["logged_id"] = errors["user"].id
+#             request.session["logged_name"] = errors["user"].fname
+
+#             return redirect('/users/new')
+#         else:
+#             for tag, error in errors.iteritems():
+#                 messages.error(request, error, extra_tags=tag)
+#             return redirect('/register')
+#     else:
+#         return redirect("/register")
 
 def create(request):
     

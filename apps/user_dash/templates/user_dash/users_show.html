@@ -62,13 +62,13 @@
          {% csrf_token %}
          {% if messages %} 
          {% for x in messages %}
-        <p>{{x}}</p>
+        <p class="error" >{{x}}</p>
         {% endfor %} 
         {% endif %}
         <textarea class="form-control" placeholder="Enter message" rows="4" name="message"></textarea>
         <input type="hidden" name="receiver_id" value="{{loggeduser.id}}">
         <input type="hidden" name="this_user_id" value="{{request.session.logged_id}}">
-        <button class="postbutton">Post Message</button>
+        <button class="postbutton btn btn-primary btn-sm">Post Message</button>
     </form>
 
 
@@ -81,7 +81,7 @@
      <h3 class="m-content">{{i.content}}</h3>
       {% for j in allcomments %}
         {% if j.message_id == i.id %}
-      <p><a href="/users/show/{{i.messenger.id}}">{{j.commenter.fname}}</a> wrote:</p>
+      <p><a href="/users/show/{{j.commenter.id}}">{{j.commenter.fname}}</a> wrote:</p>
       <p class="c-content">{{j.content}}</p>
      {% endif %}
      {% endfor %}
@@ -93,7 +93,7 @@
         <input type='hidden' name='this_user_id' value="{{request.session.logged_id}}">
        
         <textarea class="form-control" placeholder="Enter comment" rows="2" name="comment"></textarea>
-        <button class="postbutton">Add Comment</button>
+        <button class="postbuttonbtn btn-primary btn-sm">Add Comment</button>
     </form> {% endfor %}
      <hr>
 

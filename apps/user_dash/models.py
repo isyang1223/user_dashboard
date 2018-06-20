@@ -9,26 +9,26 @@ class UserManager(models.Manager):
     def registration_validator(self, postData):
         errors = {}
         if len(postData['fname']) < 1:
-            errors["fname"] = "User's first name cannot be empty!"
+            errors["fname"] = "First name field is required"
         if len(postData['lname']) < 1:
-            errors["lname"] = "User's last name cannot be empty!"
+            errors["lname"] = "Last name field is required"
         if not NAME_REGEX.match(postData['fname']):
-            errors["fname"] = "User's first name cannot contain any numbers or special characters!"
+            errors["fname"] = "First name cannot contain any numbers or special characters!"
         if not NAME_REGEX.match(postData['lname']):
-            errors["lname"] = "User's last name cannot contain any numbers or special characters!"
+            errors["lname"] = "Last name cannot contain any numbers or special characters!"
         if not EMAIL_REGEX.match(postData['email']):
-            errors["email"] = "Invalid Email/Password!"
+            errors["email"] = "Email is invalid"
         if len(postData['password']) < 8:
-            errors["password"] = "Invalid Email/Password!"
+            errors["password"] = "Password is invalid"
         if not postData['password'] == postData['password2']:
-            errors["password2"] = "Password is not matching with confirm password!"
+            errors["password2"] = "Passwords must match"
         if len(User.objects.filter(email=postData["email"])) > 0:
             errors["email"] = "Email already exist"
         if len(errors) == 0:
             hash1 = bcrypt.hashpw(postData['password'].encode(), bcrypt.gensalt())
             user = User.objects.create(fname=postData['fname'], lname=postData['lname'], email=postData['email'], user_level="normal", password=hash1 )
-            if not postData['admin'] == "admin":
-                errors['user'] = user
+            errors['id'] = user.id
+            errors['user_level'] = user.user_level
             if user.id == 1:
                 user.user_level = "admin"
                 user.save()
@@ -50,15 +50,15 @@ class UserManager(models.Manager):
     def edit_validator(self, postData):
         errors={}
         if len(postData['fname']) < 1:
-            errors["fname"] = "User's first name cannot be empty!"
+            errors["fname"] = "First name field is required"
         if len(postData['lname']) < 1:
-            errors["lname"] = "User's last name cannot be empty!"
+            errors["lname"] = "Last name field is required"
         if not NAME_REGEX.match(postData['fname']):
-            errors["fname"] = "User's first name cannot contain any numbers or special characters!"
+            errors["fname"] = "First name cannot contain any numbers or special characters!"
         if not NAME_REGEX.match(postData['lname']):
-            errors["lname"] = "User's last name cannot contain any numbers or special characters!"
+            errors["lname"] = "Last name cannot contain any numbers or special characters!"
         if not EMAIL_REGEX.match(postData['email']):
-            errors["email"] = "Invalid Email/Password!"
+            errors["email"] = "Email is invalid"
        
         if len(errors) == 0:
             this_user = User.objects.filter(id= postData["this_user_id"])
@@ -76,9 +76,9 @@ class UserManager(models.Manager):
     def pw_validator(self, postData):
         errors={}
         if len(postData['password']) < 8:
-            errors["password"] = "Invalid Email/Password!"
+            errors["password"] = "Password is invalid"
         if not postData['password'] == postData['password2']:
-            errors["password2"] = "Password is not matching with confirm password!"
+            errors["password2"] = "Passwords must match"
         if len(errors) == 0:
             hash1 = bcrypt.hashpw(postData['password'].encode(), bcrypt.gensalt())
             this_user = User.objects.filter(id= postData["this_user_id"])

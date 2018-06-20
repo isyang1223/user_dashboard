@@ -47,7 +47,7 @@
         <h1>Register</h1>
          {% if messages %} {% for x in messages %}
         
-        <p>{{x}}</p>
+        <p class="error">{{x}}</p>
         {% endfor %} {% endif %}
         <form action='/reg' method='post'>
             {% csrf_token %}
@@ -72,7 +72,7 @@
             <br>
             <br>
         
-            <input type='submit' value='Register'>
+            <input class="btn btn-primary btn-lg" type='submit' value='Register'>
         </form>
 
         <a href="/signin">Already have an account? Sign in</a>

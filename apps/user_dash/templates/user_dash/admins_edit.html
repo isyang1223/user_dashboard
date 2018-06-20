@@ -53,9 +53,9 @@
         <div class="row">
             <h1 class="col-md-6">Edit User: {{this_user.fname}}</h1>
 
-            <button class="col-md-3 col-md-offset-3 returnbutton">
-                <a href="/dashboard">Return to Dashboard</a>
-            </button>
+            
+                <a class="btn btn-primary btn-lg returnbutton col-md-3 col-md-offset-3" href="/dashboard">Return to Dashboard</a>
+        
 
         </div>
 
@@ -66,7 +66,7 @@
 
         {% if messages %} {% for x in messages %}
 
-        <p>{{x}}</p>
+        <p class="error">{{x}}</p>
         {% endfor %} {% endif %}
         <div class="border">
             <form action='/users/edit/admin/{{this_user.id}}' method='post'>
@@ -92,7 +92,7 @@
 
 
                 <input type="hidden" name="this_user_id" value="{{this_user.id}}">
-                <input type='submit' value='save'>
+                <input class="btn btn-primary" type='submit' value='save'>
 
             </form>
         </div>
@@ -112,7 +112,7 @@
                 <br>
                 <br>
                 <input type="hidden" name="this_user_id" value="{{this_user.id}}">
-                <input type='submit' value='Update Password'>
+                <input class="btn btn-primary" type='submit' value='Update Password'>
             </form>
         </div>
         <!-- <hr>
